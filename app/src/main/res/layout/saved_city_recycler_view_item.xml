@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycler_view_item_relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/recycler_view_saved_cities_item_image_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/btn_star_big_on" />
+
+    <TextView
+        android:id="@+id/recycler_view_saved_cities_item_temp_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="32&#xb0;"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/recycler_view_saved_cities_item_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/recycler_view_saved_cities_item_temp_text_view"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/recycler_view_saved_cities_item_image_view"
+        android:fontFamily="serif"
+        android:gravity="start"
+        android:padding="10dp"
+        android:maxLines="1"
+        android:text="New Delhi, India"
+        android:textColor="@android:color/black" />
+
+
+</RelativeLayout>

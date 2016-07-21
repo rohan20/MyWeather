@@ -1,0 +1,225 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.coppermobile.myweather.TabLayoutFragments.CurrentFragment">
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/current_weather_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="80dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="20dp">
+        <!--android:visibility="invisible"-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/image_view_temp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/logo" />
+
+            <LinearLayout
+                android:id="@+id/linear_layout_general"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/image_view_temp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"
+                android:layout_toStartOf="@id/image_view_temp"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/text_view_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:fontFamily="serif"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="Dummy Data"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/text_view_day_and_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Thursday, 20/06/2016"
+                    android:textSize="12sp" />
+
+                <com.romainpiel.shimmer.ShimmerTextView
+                    android:id="@+id/text_view_last_updated"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="(Last updated: 12:45 pm)"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/temp_relative_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/linear_layout_general"
+                android:layout_below="@id/linear_layout_general"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/round"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/text_view_temp_current"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="31.23&#xb0;"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_view_temp_current"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/text_view_temp_min"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="25.06&#xb0;"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/text_view_temp_min_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/text_view_temp_min"
+                            android:gravity="center"
+                            android:text="Min"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/text_view_temp_max"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="34.32&#xb0;"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/text_view_temp_max_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/text_view_temp_max"
+                            android:gravity="center"
+                            android:text="Max"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_view_temp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/temp_relative_layout"
+                android:orientation="vertical">
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/text_view_sunrise"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:drawableStart="@drawable/sunrise"
+                    android:gravity="center"
+                    android:text="15 Jul, 05:30 am"
+                    android:textSize="12sp" />
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/text_view_sunset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:drawableStart="@drawable/sunset"
+                    android:gravity="center"
+                    android:text="15 Jul, 07:45 pm"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/text_view_humidity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:drawableStart="@drawable/humidity"
+                    android:gravity="center"
+                    android:paddingStart="6dp"
+                    android:text="78%"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <!--<TextView-->
+    <!--android:id="@+id/initial_text_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="200dp"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="10dp"-->
+    <!--android:text="Click on add button to add city."-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:textSize="20sp" />-->
+
+
+</RelativeLayout>

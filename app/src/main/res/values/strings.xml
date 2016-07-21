@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">My Weather</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="google_app_id">AIzaSyCNo50y0_4hAhWjnXZ58hd1H1V6uWGxW-8</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+    <string name="appwidget_text">EXAMPLE</string>
+
+</resources>

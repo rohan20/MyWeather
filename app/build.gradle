@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        applicationId "com.coppermobile.myweather"
+        minSdkVersion 19
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        buildTypes.each {
+            it.buildConfigField 'String', 'YOUR_API_KEY', API_KEY
+            it.buildConfigField 'String', 'YOUR_APP_ID', APP_ID
+        }
+        buildTypes {
+            release {
+                minifyEnabled true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:design:24.0.0'
+    compile 'com.google.android.gms:play-services-places:9.2.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.afollestad.material-dialogs:core:0.8.6.1'
+    compile 'com.android.support:cardview-v7:24.0.0'
+    compile 'com.android.support:support-v4:24.0.0'
+    compile 'me.grantland:autofittextview:0.2.1'
+    compile 'com.romainpiel.shimmer:library:1.4.0@aar'
+}
