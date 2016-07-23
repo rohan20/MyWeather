@@ -18,7 +18,10 @@ public class Constants {
     public static final String LAUNCH_APP = "launch_app";
     public static String UPDATE_WEATHER_REFRESH_CLICKED = "update";
 
-    public static String SEARCH_STRING = "search";
-    public static String DISPLAY_STRING_HALF = "displayStringHalf";
+    public static final String DISPLAY_STRING_HALF_INTENT_EXTRA = "displayString";
+    public static final String SEARCH_STRING_INTENT_EXTRA = "searchString";
+
+    public static final String SEND_TO_MAIN_ACTIVITY_DISPLAY_STRING_HALF = "searchStringMainActivity";
+    public static final String SEND_TO_MAIN_ACTIVITY_SEARCH_STRING = "searchStringMainActivity";
 
 }

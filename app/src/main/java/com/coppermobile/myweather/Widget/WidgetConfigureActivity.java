@@ -23,6 +23,7 @@ public class WidgetConfigureActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "WidgetPrefs";
     private static final String PREF_DISPLAY_HALF_KEY = "displayStringHalf_appwidget_";
+    private static final String PREF_DISPLAY_FULL_KEY = "displayString_appwidget_";
     private static final String PREF_SEARCH_KEY = "searchString_appwidget_";
 
     private PlaceAutocompleteFragment autocompleteFragment;
@@ -78,7 +79,7 @@ public class WidgetConfigureActivity extends AppCompatActivity {
             public void onPlaceSelected(Place place) {
 
                 if (place == null) {
-                    Toast.makeText(WidgetConfigureActivity.this, "Error in getting location selected.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WidgetConfigureActivity.this, "Error in getting data for location selected.", Toast.LENGTH_SHORT).show();
                     finish();
                     return;
                 }
@@ -94,6 +95,7 @@ public class WidgetConfigureActivity extends AppCompatActivity {
                 WeatherWidget.updateAppWidget(WidgetConfigureActivity.this, appWidgetManager, mAppWidgetId);
 
                 //5
+                Toast.makeText(WidgetConfigureActivity.this, "Fetching latest data, please wait...", Toast.LENGTH_SHORT).show();
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
                 setResult(RESULT_OK, resultValue);

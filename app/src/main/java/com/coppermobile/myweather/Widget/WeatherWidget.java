@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.coppermobile.myweather.MainActivity;
 import com.coppermobile.myweather.POJOs.Response;
+import com.coppermobile.myweather.POJOs.Weather;
 import com.coppermobile.myweather.R;
 import com.coppermobile.myweather.Utils.Constants;
 import com.coppermobile.myweather.Utils.RESTAdapter;
@@ -42,8 +43,10 @@ public class WeatherWidget extends AppWidgetProvider {
         updateWidget.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         updateWidget.setAction(Constants.UPDATE_WEATHER_REFRESH_CLICKED);
 
-        Intent launchApp = new Intent(context, MainActivity.class);
+        Intent launchApp = new Intent(context, WeatherWidget.class);
         launchApp.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        launchApp.putExtra(Constants.DISPLAY_STRING_HALF_INTENT_EXTRA, WidgetConfigureActivity.loadTitlePref(context, appWidgetId).get(0));
+        launchApp.putExtra(Constants.SEARCH_STRING_INTENT_EXTRA, WidgetConfigureActivity.loadTitlePref(context, appWidgetId).get(1));
         launchApp.setAction(Constants.LAUNCH_APP);
 
         PendingIntent launchAppPendingIntent = PendingIntent.getBroadcast(context, 0, launchApp, 0);
@@ -116,7 +119,7 @@ public class WeatherWidget extends AppWidgetProvider {
                     appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
                 }
 
-                Toast.makeText(context, mDisplayStringHalf + " weather data updated.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Weather data updated.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -147,10 +150,11 @@ public class WeatherWidget extends AppWidgetProvider {
         }
 
         if (intent.getAction().equals(Constants.LAUNCH_APP)) {
-            Toast.makeText(context, "App launched from widget", Toast.LENGTH_SHORT).show();
-
+//            Toast.makeText(context, "App launched from widget", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(context, MainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(Constants.SEND_TO_MAIN_ACTIVITY_DISPLAY_STRING_HALF, intent.getStringExtra(Constants.DISPLAY_STRING_HALF_INTENT_EXTRA));
+            i.putExtra(Constants.SEND_TO_MAIN_ACTIVITY_SEARCH_STRING, intent.getStringExtra(Constants.SEARCH_STRING_INTENT_EXTRA));
             context.startActivity(i);
         }
 

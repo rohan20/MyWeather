@@ -105,6 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setUpViewPager();
         init();
 
+        Intent widgetIntent = getIntent();
+//        Toast.makeText(MainActivity.this, "Intent Received", Toast.LENGTH_SHORT).show();
+        if (widgetIntent != null && widgetIntent.getExtras() != null) {
+//            Toast.makeText(MainActivity.this, "NOT NULL", Toast.LENGTH_SHORT).show();
+            callApi(widgetIntent.getStringExtra(Constants.SEND_TO_MAIN_ACTIVITY_DISPLAY_STRING_HALF), widgetIntent.getStringExtra(Constants.SEND_TO_MAIN_ACTIVITY_SEARCH_STRING));
+        }
+
+
     }
 
     private void buildGoogleApiClient() {
@@ -319,10 +327,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Places API Error? On adding Faridabad, noida is added to recycler view.
 
                 Place place = PlaceAutocomplete.getPlace(this, data);
-                callApi(place);
-                mDrawer.closeDrawer(GravityCompat.START);
 
-                mNavigationDrawerAdapter.notifyDataSetChanged();
+                //create new saved city
+                callApi(place);
+//                mDrawer.closeDrawer(GravityCompat.START);
+//                mNavigationDrawerAdapter.notifyDataSetChanged();
 
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
@@ -340,10 +349,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void callApi(final String mDisplayStringHalf, final String mSearchString) {
+
+        if (mDisplayStringHalf == null || mSearchString == null) {
+//            Toast.makeText(MainActivity.this, "string(s) is null", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mDrawer.closeDrawer(GravityCompat.START);
+
+        Toast.makeText(MainActivity.this, "All temp units: Celcius", Toast.LENGTH_SHORT).show();
+
+        String searchString = mSearchString;
+
+        Call<Response> request = mRetrofitAdapter.getWeatherAPI().getResponseCall(searchString, Constants.TEMP_UNITS_CELCIUS, Constants.APP_ID);
+        Call<ResponseFiveDays> requestFiveDays = mRetrofitAdapter.getWeatherAPI().getResponseFiveDaysCall(searchString, Constants.TEMP_UNITS_CELCIUS, Constants.APP_ID);
+
+        request.enqueue(new Callback<Response>() {
+            @Override
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+
+                if (!response.isSuccessful()) {
+                    Log.i("error", response.message());
+                    return;
+                }
+
+                setResponse(response);
+                getNavigationDrawerData(mDisplayStringHalf, mSearchString, response);
+            }
+
+            @Override
+            public void onFailure(Call<Response> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "API call failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        requestFiveDays.enqueue(new Callback<ResponseFiveDays>() {
+            @Override
+            public void onResponse(Call<ResponseFiveDays> call, retrofit2.Response<ResponseFiveDays> responseFiveDays) {
+
+                if (!responseFiveDays.isSuccessful()) {
+                    Log.i("error", responseFiveDays.message());
+                    return;
+                }
+
+                mFiveDaysModelList.addAll(setFiveDaysFragmentData(responseFiveDays));
+                initializeFiveDaysFragment(mFiveDaysModelList);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseFiveDays> call, Throwable t) {
+
+            }
+        });
+
+    }
+
     /**
      * @param place
      */
     public void callApi(final Place place) {
+
+        mDrawer.closeDrawer(GravityCompat.START);
 
         Toast.makeText(MainActivity.this, "All temp units: Celcius", Toast.LENGTH_SHORT).show();
 
@@ -390,6 +457,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+    }
+
+    private void getNavigationDrawerData(String mDisplayStringHalf, String mSearchString, retrofit2.Response<Response> response) {
+
+//        String displayStringHalf = place.getName().toString();
+        String displayStringHalf = mDisplayStringHalf;
+//        String searchString = place.getName().toString() + " " + place.getAddress().toString();
+        String searchString = mSearchString;
+
+        SavedCityModel newSavedCity = new SavedCityModel();
+
+        Log.i("array size", response.body().toString());
+
+        newSavedCity.setWeatherIcon(response.body().getWeather().get(0).getIcon());
+        String displayString = displayStringHalf + ", " + response.body().getSys().getCountry();
+        setTitle(displayString);
+        newSavedCity.setDisplayName(displayString);
+        newSavedCity.setWeatherTemp(response.body().getMain().getTemp().toString());
+        newSavedCity.setApiSearchString(searchString);
+        newSavedCity.setId(response.body().getId().toString());
+
+        setCurrentCity(newSavedCity);
+
+        mSharedPreferences.edit().putString(Constants.CURRENT_CITY, new Gson().toJson(newSavedCity)).apply();
+        updateHeader(newSavedCity);
+
+        updateSharedPreferencesSavedCities(newSavedCity);
+
+        mSavedCityModelList.add(0, newSavedCity);
+        mNavigationDrawerAdapter.notifyDataSetChanged();
+        setCurrentFragmentData(response);
     }
 
     private void getNavigationDrawerData(Place place, retrofit2.Response<Response> response) {
